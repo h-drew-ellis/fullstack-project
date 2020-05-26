@@ -26,6 +26,6 @@ app.get('/register', (req, res) =>
     res.render('register'))
 
 
-app.listen(300, () => {
+app.listen(3000, () => {
     console.log("All systems go")
 })
