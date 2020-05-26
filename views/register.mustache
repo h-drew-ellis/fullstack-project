@@ -3,13 +3,25 @@
 <body>
 <div id="loginBox">
 <form method="POST" action="/registerUser">
-    <label>Username:</label> <input type="text" name="username" placeholder="Username" required>
-    <label>Password: (minimum of 6 characters)</label><input type="password" name="pass1" placeholder="Password" minlength="5" required>
+    <div>
+        <label>Username:</label> <input type="text" name="username" placeholder="Username" required>
+    </div>
+    <div>
+        <label>Password: (minimum of 6 characters)</label><input type="password" name="pass1" placeholder="Password" minlength="5" required>
+    </div>
+    <div>
     <label>Confirm Password:</label><input type="password" name="pass2" placeholder="Please confirm password above" minlength="5" required>
+    </div>
+    <div>
     <label>Optional:</label><input type="text" name="firstName" Placeholder="First Name">
+    </div>
+    <div>
     <label>Optional:</label><input type="text" name="lastName" placeholder="Last Name">
+    </div>
+    <div>
     <label>Email Address</label><input type="email" name="email" placeholder="Email address" required>
-    <button id="registerBTN">Register<button>
+    </div>
+    <button id="registerBTN">Register</button>
 </form>
 </div>
 <div id=redirect>
