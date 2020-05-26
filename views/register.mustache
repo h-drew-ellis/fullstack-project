@@ -1,7 +1,7 @@
 <html>
 <head></head>
 <body>
-<div id="login box">
+<div id="loginBox">
 <form method="POST" action="/login">
     <label>Username:</label> <input type="text" name="username" placeholder="Username" required>
     <label>Password: (minimum of 6 characters)</label><input type="password" name="loginPass1" placeholder="Password" minlength="5" required>
@@ -11,5 +11,7 @@
     <label>Email Address</label><input type="email" name="email" placeholder="Email address" required>
     <button id="loginButton">Login<button>
 </form>
-
-<a href="/" id="registerRedirect">Already have an account? Click here to Login.</a>
+</div>
+<div id=redirect>
+<a href="/" id="loginRedirect">Already have an account? Click here to Login.</a>
+</div>
