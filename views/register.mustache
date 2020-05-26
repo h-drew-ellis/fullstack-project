@@ -2,16 +2,18 @@
 <head></head>
 <body>
 <div id="loginBox">
-<form method="POST" action="/login">
+<form method="POST" action="/registerUser">
     <label>Username:</label> <input type="text" name="username" placeholder="Username" required>
-    <label>Password: (minimum of 6 characters)</label><input type="password" name="loginPass1" placeholder="Password" minlength="5" required>
-    <label>Confirm Password:</label><input type="password" name="loginPass2" placeholder="Please confirm password above" minlength="5" required>
+    <label>Password: (minimum of 6 characters)</label><input type="password" name="pass1" placeholder="Password" minlength="5" required>
+    <label>Confirm Password:</label><input type="password" name="pass2" placeholder="Please confirm password above" minlength="5" required>
     <label>Optional:</label><input type="text" name="firstName" Placeholder="First Name">
-    <label>Optional:</label><input type="text" name="LastName" placeholder="Last Name">
+    <label>Optional:</label><input type="text" name="lastName" placeholder="Last Name">
     <label>Email Address</label><input type="email" name="email" placeholder="Email address" required>
-    <button id="loginButton">Login<button>
+    <button id="registerBTN">Register<button>
 </form>
 </div>
 <div id=redirect>
 <a href="/" id="loginRedirect">Already have an account? Click here to Login.</a>
 </div>
+</body>
+</html>
