@@ -1,10 +1,12 @@
 //requires
+
 const express = require("express");
 const app = express();
 const mustacheExpress = require("mustache-express");
 const models = require("./models");
 const bcrypt = require("bcrypt");
 const fetch = require("node-fetch");
+
 
 const saltRounds = 10;
 
@@ -19,6 +21,7 @@ app.use(express.urlencoded());
 app.engine("mustache", mustacheExpress());
 app.set("views", "./views");
 app.set("view engine", "mustache");
+
 
 //gets
 app.get("/", (req, res) => {
@@ -114,6 +117,7 @@ app.post("/game-search", (req, res) => {
   searchedGame = games.filter(function (x) {
     return x.name == gameSearched;
   });
+
 
   res.redirect("/game-search");
 });
