@@ -1,0 +1,40 @@
+<html>
+<head>
+
+<head>
+
+
+<body> 
+
+
+<label>Filter</label> <form method='POST' action='/filtered-games'>
+ <select name='dropdown'>
+  <option value="Action">Action</option>
+  <option value="Adventure">Adventure</option>
+  <option value="Sports">Sports</option>
+  <option value="Shooter">Shooter</option>
+</select>
+<button>Filter</button>
+</form>
+
+<label>Search by Game</label>
+<form method="POST" action='/game-search'>
+<input type='text' placeHolder='Search by Game' name='gameSearch'> <button>Search Game</button>
+</form>
+
+<ul>
+{{#games}}
+<li>
+<a href='/games/{{id}}'><img width="200" height="300" src={{image}}></a> 
+</br>
+<b>{{name}}</b>
+</li> 
+{{/games}}
+</ul>
+
+
+</body>
+
+
+
+<html>
