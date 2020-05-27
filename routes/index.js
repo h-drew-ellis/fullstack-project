@@ -4,9 +4,9 @@ const db = require("../models")
 const bcrypt = require('bcrypt')
 const { check } = require('express-validator')
 const fetch = require("node-fetch")
-const saltRounds = 10
+const session = require("express-session")
 
-
+let saltRounds = 10
 let games = [];
 let gamesFiltered = [];
 let searchedGame = [];
