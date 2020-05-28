@@ -162,13 +162,13 @@ router.get("/users", (req, res) => {
                 userId: req.session.userId,
             },
         })
-        .then((y) => {
+        .then((games) => {
             db.Friends.findAll()
                 .then((friends) => {
                     db.User.findAll()
                         .then((users) => {
                             res.render("userPage", {
-                                watchListGames: watchListGames,
+                                watchListGames: games,
                                 users: users,
                                 friends: friends
                             })
@@ -337,12 +337,14 @@ router.post("/watchlist", (req, res) => {
 
 router.post("/addFriend", (req, res) => {
     let friend = req.body.userId;
+    let friendName = req.body.username;
     let selfUser = req.session.userId;
 
     db.Friends
         .create({
             userId: selfUser,
-            friend: friend
+            friend: friend,
+            username: friendName
         })
 
     res.redirect("/userSearch");

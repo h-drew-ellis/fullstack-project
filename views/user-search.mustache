@@ -15,6 +15,7 @@
 <li>  <b>{{dataValues.username}}</b> {{dataValues.email}}
 <form method="POST" action='/addFriend'>
 <input type="hidden" name="userId" value={{dataValues.id}}
+<input type="hidden" name="userName" value={{dataValues.username}}
 ><button>+</button></form></li>
 
 {{/users}}
