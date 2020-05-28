@@ -162,22 +162,21 @@ router.get("/users", (req, res) => {
                 userId: req.session.userId,
             },
         })
-        .then((x) => {
-            for (let i = 0; i < x.length; i++) {
-                watchListGames.push({
-                    id: x[i].dataValues.id,
-                    genre: x[i].dataValues.genre,
-                    userId: x[i].dataValues.userId,
-                    name: x[i].dataValues.name,
-                    released: x[i].dataValues.released,
-                    image: x[i].dataValues.image,
-                    rating: x[i].dataValues.rating,
-                });
-            }
-            res.render("userPage", { watchListGames: watchListGames });
-        });
-});
+        .then((y) => {
+            db.Friends.findAll()
+                .then((friends) => {
+                    db.User.findAll()
+                        .then((users) => {
+                            res.render("userPage", {
+                                watchListGames: watchListGames,
+                                users: users,
+                                friends: friends
+                            })
+                        })
+                })
 
+        });
+})
 router.get("/userSearch", authentication, (req, res) => {
     db.User.findAll().then((users) => {
         console.log(users);
