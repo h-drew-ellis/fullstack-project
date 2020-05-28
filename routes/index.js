@@ -5,13 +5,7 @@ const bcrypt = require("bcrypt");
 const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session");
-router.use(
-  session({
-    secret: "racecar",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+
 
 let saltRounds = 10;
 let games = [];
@@ -266,16 +260,6 @@ router.post("/watchlist", (req, res) => {
     });
 });
 
-function authentication(req, res, next) {
-  if (req.session) {
-    if (req.session.authUser) {
-      next();
-    } else {
-      res.redirect("/");
-    }
-  } else {
-    res.redirect("/register");
-  }
-}
+
 
 module.exports = router;
