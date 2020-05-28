@@ -9,10 +9,16 @@
 <a href='/users'>Profile</a> </br>
 <a href='/home'>Home</a> </br>
 <a href='/userSearch'>User Search</a> </br>
-{{#game}}
-<ul>
 
-<li> <img width="200" height="300" src={{image}}> </br> Title: <b>{{name}}</b> </br>Release Date: <b>{{released}}</b> </br>Rating: <b>{{rating}}</b> </br>Genre: <b>{{genre}}</b> </br> 
+<ul>
+{{#game}}
+
+
+<li> <img width="200" height="300" src={{image}}> 
+</br> Title: <b>{{name}}</b> 
+</br>Release Date: <b>{{released}}</b> 
+</br>Rating: <b>{{rating}}</b> 
+</br>Genre: <b>{{genre}}</b> </br> 
 <form method='POST' action='/watchlist'> 
 <input type='hidden' name='namex' value={{name}}>
 <input type='hidden' name='genre' value={{genre}}>
@@ -24,8 +30,9 @@
  
  </li>
 
-</ul>
+
 {{/game}}
+</ul>
 </body>
 
 
