@@ -9,7 +9,17 @@
 {{#game}}
 <ul>
 
-<li> <img width="200" height="300" src={{image}}> </br> Title: <b>{{name}}</b> </br>Release Date: <b>{{released}}</b> </br>Rating: <b>{{rating}}</b> </br>Genre: <b>{{genre}}</b> </br><button>+</button></li>
+<li> <img width="200" height="300" src={{image}}> </br> Title: <b>{{name}}</b> </br>Release Date: <b>{{released}}</b> </br>Rating: <b>{{rating}}</b> </br>Genre: <b>{{genre}}</b> </br> 
+<form method='POST' action='/watchlist'> 
+<input type='hidden' name='name' value={{name}}>
+<input type='hidden' name='genre' value={{genre}}>
+<input type='hidden' name='released' value={{released}}>
+<input type='hidden' name='image' value={{image}}>
+<input type='hidden' name='rating' value={{rating}}>
+
+ <button>+</button></form>
+ 
+ </li>
 
 </ul>
 {{/game}}
