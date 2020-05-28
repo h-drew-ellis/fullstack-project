@@ -6,14 +6,14 @@ const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session")
 const app = express()
-const models =
 
-    app.use(session({
-        secret: 'racecar',
-        resave: false,
-        saveUninitialized: true,
-    }))
-
+app.use(
+  session({
+    secret: "racecar",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 ////Arrays
 let saltRounds = 10
@@ -21,6 +21,8 @@ let games = [];
 let gamesFiltered = [];
 let searchedGame = [];
 let gamesForHomePage = [];
+let watchListGames = [];
+
 
 /*=============================================================================*/
 /*=============================================================================*/
@@ -122,41 +124,54 @@ router.get("/home", authentication, (req, res) => {
         });
 });
 
-router.get("/games/:id", (req, res) => {
-    games = [];
-    let id = req.params.id;
-    console.log(id);
-    fetch(`https://api.rawg.io/api/games/${id}`)
-        .then((response) => response.json())
-        .then((gameInfo) => {
-            games.push({
-                name: gameInfo.name,
-                released: gameInfo.released,
-                image: gameInfo.background_image,
-                rating: gameInfo.rating,
-                genre: gameInfo.genres[0].name,
-                id: gameInfo.id,
-            });
-            res.render("games", { game: games });
-        });
+
+
+router.get("/games/:id", authentication, (req, res) => {
+  games = [];
+  let id = req.params.id;
+
+  fetch(`https://api.rawg.io/api/games/${id}`)
+    .then((response) => response.json())
+    .then((gameInfo) => {
+      games.push({
+        name: gameInfo.name,
+        released: gameInfo.released,
+        image: gameInfo.background_image,
+        rating: gameInfo.rating,
+        genre: gameInfo.genres[0].name,
+        id: gameInfo.id,
+      });
+      res.render("games", { game: games });
+    });
+      .then(() => {
+      gamesForHomePage = games.slice(1, 15);
+
+      res.render("api", { games: gamesForHomePage });
+    });
 });
 
-router.get("/filtered-games", (req, res) => {
-    res.render("filtered-games", { filteredGames: gamesFiltered });
+router.get("/filtered-games", authentication, (req, res) => {
+  res.render("filtered-games", { filteredGames: gamesFiltered });
 });
 
-router.get("/game-search", (req, res) => {
-    console.log(searchedGame);
-    res.render("game-search", { gameSearched: searchedGame[0] });
+router.get("/game-search", authentication, (req, res) => {
+  res.render("game-search", { gameSearched: searchedGame[0] });
 });
 
-router.get("/userSearch", (req, res) => {
+router.get("/users", (req, res) => {
+  res.render("userPage", { watchListGames: watchListGames });
+});
+
+
+
+router.get("/userSearch", authentication, (req, res) => {
     db.User.findAll()
         .then(users => {
             console.log(users)
             res.render("user-search", { users: users })
         });
 })
+
 
 /*=============================================================================*/
 /*=============================================================================*/
@@ -169,13 +184,25 @@ router.get("/userSearch", (req, res) => {
 ///LOGIN POST////
 /*=============================================================================*/
 router.post("/login", (req, res) => {
-    db.User.findOne({
-        where: {
-            username: req.body.loginUser,
-        },
-    }).then(function(user) {
-        if (!user) {
-            res.render("login", { message: "username not found, please try again." });
+
+  db.User.findOne({
+    where: {
+      username: req.body.loginUser,
+    },
+  }).then(function (user) {
+    if (!user) {
+      res.render("login", { message: "username not found, please try again." });
+    } else {
+      bcrypt.compare(req.body.loginPass, user.password, function (err, result) {
+        if (result == true) {
+          if (req.session) {
+            req.session.authUser = true;
+            //writing to session
+            req.session.userId = user.dataValues.id;
+          }
+          console.log("logging in");
+
+          res.redirect("/home");
         } else {
             bcrypt.compare(req.body.loginPass, user.password, function(err, result) {
                 if (result == true) {
@@ -197,44 +224,21 @@ router.post("/login", (req, res) => {
 /*=============================================================================*/
 ///REGISTER POST////
 /*=============================================================================*/
-router.post(
-    "/registerUser", [
-        check("username").custom((value) => {
-            return User.findByUsername(value).then((user) => {
-                if (user) {
-                    return console.log(user);
-                }
-            });
-        }),
-        check("email").custom((value) => {
-            return User.findByEmail(value).then((user) => {
-                if (user) {
-                    return Promise.reject("Account is tied to Email");
-                }
-            });
-        }),
-        check("pass1").custom((value) => {
-            if (value !== req.body.pass2) {
-                throw new Error("Passwords do not match, please try again");
-            }
-        }),
-    ],
-    (req, res) => {
-        bcrypt.hash(req.body.pass1, saltRounds, function(err, hash) {
-            db.User.create({
-                username: req.body.username,
-                password: hash,
-                first: req.body.firstName,
-                last: req.body.lastName,
-                email: req.body.email,
-            }).then(function(data) {
-                if (data) {
-                    res.redirect("/");
-                }
-            });
-        });
-    }
-);
+router.post("/registerUser", (req, res) => {
+  bcrypt.hash(req.body.pass1, saltRounds, function (err, hash) {
+    db.User.create({
+      username: req.body.username,
+      password: hash,
+      first: req.body.firstName,
+      last: req.body.lastName,
+      email: req.body.email,
+    }).then(function (data) {
+      if (data) {
+        res.redirect("/");
+      }
+    });
+  });
+});
 
 router.post("/games/specific-game", (req, res) => {
     let id = req.body.gameId;
@@ -265,14 +269,58 @@ router.post("/filtered-games", (req, res) => {
 });
 
 router.post("/game-search", (req, res) => {
-    let gameSearched = req.body.gameSearch;
-    searchedGame = games.filter(function(x) {
-        return x.name == gameSearched;
-    });
-    console.log(searchedGame);
+
+  let gameSearched = req.body.gameSearch;
+  searchedGame = games.filter(function (x) {
+    return x.name == gameSearched;
+  });
+
 
     res.redirect("/game-search");
 });
+
+router.post("/watchlist", (req, res) => {
+  let name = req.body.namex;
+  let released = req.body.released;
+  let image = req.body.image;
+  let userId = req.session.userId;
+  let genre = req.body.genre;
+
+  //   let rating = parseInt(req.body.rating);
+  let rating = 5;
+
+  db.watchlists
+    .create({
+      genre: genre,
+      userId: userId,
+      name: name,
+      released: released,
+      image: image,
+      rating: rating,
+    })
+    .then((watchlist) => {
+      db.watchlists
+        .findAll({
+          where: {
+            userId: req.session.userId,
+          },
+        })
+        .then((x) => {
+          for (let i = 0; i < x.length; i++) {
+            watchListGames.push({
+              id: x[i].dataValues.id,
+              genre: x[i].dataValues.genre,
+              userId: x[i].dataValues.userId,
+              name: x[i].dataValues.name,
+              released: x[i].dataValues.released,
+              image: x[i].dataValues.image,
+              rating: x[i].dataValues.rating,
+            });
+          }
+        });
+    });
+
+  res.redirect("/home");
 
 router.post("/addFriend", (req, res) => {
     let friend = req.body.userId;
@@ -296,3 +344,4 @@ function authentication(req, res, next) {
 }
 
 module.exports = router;
+
