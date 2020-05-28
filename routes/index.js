@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session");
-
 const app = express();
 
 app.use(
@@ -17,7 +16,6 @@ app.use(
 );
 
 ////Arrays
-
 let saltRounds = 10;
 let games = [];
 let gamesFiltered = [];
@@ -128,10 +126,13 @@ router.get("/home", authentication, (req, res) => {
 router.get("/games/:id", authentication, (req, res) => {
   games = [];
   let id = req.params.id;
+  console.log("initialize");
 
   fetch(`https://api.rawg.io/api/games/${id}`)
     .then((response) => response.json())
+
     .then((gameInfo) => {
+      console.log("game info");
       games.push({
         name: gameInfo.name,
         released: gameInfo.released,
@@ -140,7 +141,9 @@ router.get("/games/:id", authentication, (req, res) => {
         genre: gameInfo.genres[0].name,
         id: gameInfo.id,
       });
+      console.log("pushing game");
       res.render("games", { game: games });
+      console.log("render");
     });
 });
 
@@ -175,6 +178,13 @@ router.get("/users", (req, res) => {
     });
 });
 
+router.get("/userSearch", authentication, (req, res) => {
+  db.User.findAll().then((users) => {
+    console.log(users);
+    res.render("user-search", { users: users });
+  });
+});
+
 /*=============================================================================*/
 /*=============================================================================*/
 /// POSTS////
@@ -205,8 +215,21 @@ router.post("/login", (req, res) => {
 
           res.redirect("/home");
         } else {
-          res.render("login", {
-            message: "Invalid Password please try again.",
+          bcrypt.compare(req.body.loginPass, user.password, function (
+            err,
+            result
+          ) {
+            if (result == true) {
+              if (result) {
+                req.session.authUser = true;
+              }
+              console.log("logging in");
+              res.redirect("/home");
+            } else {
+              res.render("login", {
+                message: "Invalid Password please try again.",
+              });
+            }
           });
         }
       });
@@ -280,16 +303,46 @@ router.post("/watchlist", (req, res) => {
   //   let rating = parseInt(req.body.rating);
   let rating = 5;
 
-  db.watchlists.create({
-    genre: genre,
-    userId: userId,
-    name: name,
-    released: released,
-    image: image,
-    rating: rating,
+  db.watchlists
+    .create({
+      genre: genre,
+      userId: userId,
+      name: name,
+      released: released,
+      image: image,
+      rating: rating,
+    })
+    .then((watchlist) => {
+      db.watchlists
+        .findAll({
+          where: {
+            userId: req.session.userId,
+          },
+        })
+        .then((x) => {
+          for (let i = 0; i < x.length; i++) {
+            watchListGames.push({
+              id: x[i].dataValues.id,
+              genre: x[i].dataValues.genre,
+              userId: x[i].dataValues.userId,
+              name: x[i].dataValues.name,
+              released: x[i].dataValues.released,
+              image: x[i].dataValues.image,
+              rating: x[i].dataValues.rating,
+            });
+          }
+        });
+    });
+  res.redirect("/home");
+});
+
+router.post("/addFriend", (req, res) => {
+  let friend = req.body.userId;
+  searchedGame = games.filter(function (x) {
+    return x.name == gameSearched;
   });
 
-  res.redirect("/home");
+  res.redirect("/userSearch");
 });
 
 function authentication(req, res, next) {
