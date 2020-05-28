@@ -153,7 +153,26 @@ router.get("/game-search", authentication, (req, res) => {
 });
 
 router.get("/users", (req, res) => {
-  res.render("userPage", { watchListGames: watchListGames });
+  db.watchlists
+    .findAll({
+      where: {
+        userId: req.session.userId,
+      },
+    })
+    .then((x) => {
+      for (let i = 0; i < x.length; i++) {
+        watchListGames.push({
+          id: x[i].dataValues.id,
+          genre: x[i].dataValues.genre,
+          userId: x[i].dataValues.userId,
+          name: x[i].dataValues.name,
+          released: x[i].dataValues.released,
+          image: x[i].dataValues.image,
+          rating: x[i].dataValues.rating,
+        });
+      }
+      res.render("userPage", { watchListGames: watchListGames });
+    });
 });
 
 /*=============================================================================*/
@@ -261,36 +280,14 @@ router.post("/watchlist", (req, res) => {
   //   let rating = parseInt(req.body.rating);
   let rating = 5;
 
-  db.watchlists
-    .create({
-      genre: genre,
-      userId: userId,
-      name: name,
-      released: released,
-      image: image,
-      rating: rating,
-    })
-    .then((watchlist) => {
-      db.watchlists
-        .findAll({
-          where: {
-            userId: req.session.userId,
-          },
-        })
-        .then((x) => {
-          for (let i = 0; i < x.length; i++) {
-            watchListGames.push({
-              id: x[i].dataValues.id,
-              genre: x[i].dataValues.genre,
-              userId: x[i].dataValues.userId,
-              name: x[i].dataValues.name,
-              released: x[i].dataValues.released,
-              image: x[i].dataValues.image,
-              rating: x[i].dataValues.rating,
-            });
-          }
-        });
-    });
+  db.watchlists.create({
+    genre: genre,
+    userId: userId,
+    name: name,
+    released: released,
+    image: image,
+    rating: rating,
+  });
 
   res.redirect("/home");
 });
