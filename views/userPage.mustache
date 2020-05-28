@@ -5,15 +5,23 @@
 
 
 <body> 
-<h1>User Page</h1>
+<h1>User Profile</h1>
+
+
 
 <ul>
+<h2>Your Games</h2>
 {{#watchListGames}}
-
-<li>{{name}}</li>
+<li>
+<a href='/games/{{id}}'><img width="200" height="300" src={{image}}></a> 
+</br>
+<b>{{name}}</b>
+</li>
 
 {{/watchListGames}}
 </ul>
+
+
 
 </body>
 
