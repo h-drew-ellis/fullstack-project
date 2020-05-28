@@ -6,6 +6,18 @@ const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session");
 
+const app = express();
+
+
+app.use(
+  session({
+    secret: "racecar",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+////Arrays
 
 let saltRounds = 10;
 let games = [];
@@ -28,7 +40,8 @@ router.get("/register", (req, res) => {
   res.render("register");
 });
 
-router.get("/home", (req, res) => {
+
+router.get("/home", authentication, (req, res) => {
   fetch("https://api.rawg.io/api/games?page_size=40")
     .then((response) => response.json())
     .then((gameInfo) => {
@@ -163,6 +176,13 @@ router.post("/login", (req, res) => {
     } else {
       bcrypt.compare(req.body.loginPass, user.password, function (err, result) {
         if (result == true) {
+          console.log("1");
+
+          if (req.session) {
+            console.log("2");
+
+            req.session.authUser = true;
+          }
           console.log("logging in");
           res.redirect("/home");
         } else {
@@ -179,9 +199,7 @@ router.post("/login", (req, res) => {
 ///REGISTER POST////
 /*=============================================================================*/
 router.post(
-  "/registerUser",
-
-  (req, res) => {
+  "/registerUser",  (req, res) => {
     bcrypt.hash(req.body.pass1, saltRounds, function (err, hash) {
       db.User.create({
         username: req.body.username,
@@ -236,6 +254,7 @@ router.post("/game-search", (req, res) => {
   res.redirect("/game-search");
 });
 
+
 router.post("/watchlist", (req, res) => {
   let name = req.body.name;
   let released = req.body.released;
@@ -260,6 +279,17 @@ router.post("/watchlist", (req, res) => {
     });
 });
 
+function authentication(req, res, next) {
+  if (req.session) {
+    if (req.session.authUser) {
+      next();
+    } else {
+      res.redirect("/register");
+    }
+  } else {
+    res.redirect("/home");
+  }
+}
 
 
 module.exports = router;
