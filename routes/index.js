@@ -5,7 +5,9 @@ const bcrypt = require("bcrypt");
 const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session");
+
 const app = express();
+
 
 app.use(
   session({
@@ -16,11 +18,13 @@ app.use(
 );
 
 ////Arrays
+
 let saltRounds = 10;
 let games = [];
 let gamesFiltered = [];
 let searchedGame = [];
 let gamesForHomePage = [];
+let currentUserId = [];
 
 /*=============================================================================*/
 /*=============================================================================*/
@@ -35,6 +39,7 @@ router.get("/", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("register");
 });
+
 
 router.get("/home", authentication, (req, res) => {
   fetch("https://api.rawg.io/api/games?page_size=40")
@@ -194,29 +199,7 @@ router.post("/login", (req, res) => {
 ///REGISTER POST////
 /*=============================================================================*/
 router.post(
-  "/registerUser",
-  [
-    check("username").custom((value) => {
-      return User.findByUsername(value).then((user) => {
-        if (user) {
-          return console.log(user);
-        }
-      });
-    }),
-    check("email").custom((value) => {
-      return User.findByEmail(value).then((user) => {
-        if (user) {
-          return Promise.reject("Account is tied to Email");
-        }
-      });
-    }),
-    check("pass1").custom((value) => {
-      if (value !== req.body.pass2) {
-        throw new Error("Passwords do not match, please try again");
-      }
-    }),
-  ],
-  (req, res) => {
+  "/registerUser",  (req, res) => {
     bcrypt.hash(req.body.pass1, saltRounds, function (err, hash) {
       db.User.create({
         username: req.body.username,
@@ -271,6 +254,31 @@ router.post("/game-search", (req, res) => {
   res.redirect("/game-search");
 });
 
+
+router.post("/watchlist", (req, res) => {
+  let name = req.body.name;
+  let released = req.body.released;
+  let image = req.body.image;
+  let userId = 1;
+  let genre = req.body.genre;
+
+  //   let rating = parseInt(req.body.rating);
+  let rating = 5;
+
+  db.watchlists
+    .create({
+      genre,
+      userId,
+      name,
+      released,
+      image,
+      rating,
+    })
+    .then((result) => {
+      res.send("hello");
+    });
+});
+
 function authentication(req, res, next) {
   if (req.session) {
     if (req.session.authUser) {
@@ -282,5 +290,6 @@ function authentication(req, res, next) {
     res.redirect("/home");
   }
 }
+
 
 module.exports = router;
