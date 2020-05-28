@@ -1,0 +1,24 @@
+<html>
+<head>
+
+<head>
+
+
+<body> 
+<h1>Users</h1>
+
+<ul>
+{{#users}}
+
+<li>  <b>{{dataValues.username}}</b> {{dataValues.email}
+<form method="POST" action='/addFriend'>
+<input type="hidden" name="userId" value={{dataValues.id}}
+><button>+</button></form></li>
+
+{{/users}}
+</ul>
+</body>
+
+
+
+<html>

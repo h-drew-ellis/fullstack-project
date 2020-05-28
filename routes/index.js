@@ -4,9 +4,8 @@ const db = require("../models");
 const bcrypt = require("bcrypt");
 const { check } = require("express-validator");
 const fetch = require("node-fetch");
-const session = require("express-session");
-
-const app = express();
+const session = require("express-session")
+const app = express()
 
 app.use(
   session({
@@ -17,13 +16,13 @@ app.use(
 );
 
 ////Arrays
-
-let saltRounds = 10;
+let saltRounds = 10
 let games = [];
 let gamesFiltered = [];
 let searchedGame = [];
 let gamesForHomePage = [];
 let watchListGames = [];
+
 
 /*=============================================================================*/
 /*=============================================================================*/
@@ -32,98 +31,100 @@ let watchListGames = [];
 /*=============================================================================*/
 /*=============================================================================*/
 router.get("/", (req, res) => {
-  res.render("login");
+    res.render("login");
 });
 
 router.get("/register", (req, res) => {
-  res.render("register");
+    res.render("register");
 });
 
 router.get("/home", authentication, (req, res) => {
-  fetch("https://api.rawg.io/api/games?page_size=40")
-    .then((response) => response.json())
-    .then((gameInfo) => {
-      for (let i = 0; i < gameInfo.results.length; i++) {
-        games.push({
-          name: gameInfo.results[i].name,
-          released: gameInfo.results[i].released,
-          image: gameInfo.results[i].background_image,
-          rating: gameInfo.results[i].rating,
-          genre: gameInfo.results[i].genres[0].name,
-          id: gameInfo.results[i].id,
-        });
-      }
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=5")
+    fetch("https://api.rawg.io/api/games?page_size=40")
         .then((response) => response.json())
         .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=6")
-        .then((response) => response.json())
-        .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=15")
-        .then((response) => response.json())
-        .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=20")
-        .then((response) => response.json())
-        .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      gamesForHomePage = games.slice(1, 15);
+            for (let i = 0; i < gameInfo.results.length; i++) {
+                games.push({
+                    name: gameInfo.results[i].name,
+                    released: gameInfo.results[i].released,
+                    image: gameInfo.results[i].background_image,
+                    rating: gameInfo.results[i].rating,
+                    genre: gameInfo.results[i].genres[0].name,
+                    id: gameInfo.results[i].id,
+                });
+            }
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=5")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=6")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=15")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=20")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            gamesForHomePage = games.slice(1, 15);
 
-      res.render("api", { games: gamesForHomePage });
-    });
+            res.render("api", { games: gamesForHomePage });
+        });
 });
+
+
 
 router.get("/games/:id", authentication, (req, res) => {
   games = [];
@@ -142,6 +143,11 @@ router.get("/games/:id", authentication, (req, res) => {
       });
       res.render("games", { game: games });
     });
+      .then(() => {
+      gamesForHomePage = games.slice(1, 15);
+
+      res.render("api", { games: gamesForHomePage });
+    });
 });
 
 router.get("/filtered-games", authentication, (req, res) => {
@@ -156,6 +162,17 @@ router.get("/users", (req, res) => {
   res.render("userPage", { watchListGames: watchListGames });
 });
 
+
+
+router.get("/userSearch", authentication, (req, res) => {
+    db.User.findAll()
+        .then(users => {
+            console.log(users)
+            res.render("user-search", { users: users })
+        });
+})
+
+
 /*=============================================================================*/
 /*=============================================================================*/
 /// POSTS////
@@ -167,6 +184,7 @@ router.get("/users", (req, res) => {
 ///LOGIN POST////
 /*=============================================================================*/
 router.post("/login", (req, res) => {
+
   db.User.findOne({
     where: {
       username: req.body.loginUser,
@@ -186,13 +204,21 @@ router.post("/login", (req, res) => {
 
           res.redirect("/home");
         } else {
-          res.render("login", {
-            message: "Invalid Password please try again.",
-          });
+            bcrypt.compare(req.body.loginPass, user.password, function(err, result) {
+                if (result == true) {
+                    if (result) {
+                        req.session.authUser = true
+                    }
+                    console.log("logging in");
+                    res.redirect("/home");
+                } else {
+                    res.render("login", {
+                        message: "Invalid Password please try again.",
+                    });
+                }
+            });
         }
-      });
-    }
-  });
+    });
 });
 
 /*=============================================================================*/
@@ -215,40 +241,42 @@ router.post("/registerUser", (req, res) => {
 });
 
 router.post("/games/specific-game", (req, res) => {
-  let id = req.body.gameId;
-  console.log(id);
-  fetch(`https://api.rawg.io/api/games/${id}`)
-    .then((response) => response.json())
-    .then((gameInfo) => {
-      for (let i = 0; i < gameInfo.results.length; i++) {
-        games.push({
-          name: gameInfo.results[i].name,
-          released: gameInfo.results[i].released,
-          image: gameInfo.results[i].background_image,
-          rating: gameInfo.results[i].rating,
-          id: gameInfo.results[i].id,
+    let id = req.body.gameId;
+    console.log(id);
+    fetch(`https://api.rawg.io/api/games/${id}`)
+        .then((response) => response.json())
+        .then((gameInfo) => {
+            for (let i = 0; i < gameInfo.results.length; i++) {
+                games.push({
+                    name: gameInfo.results[i].name,
+                    released: gameInfo.results[i].released,
+                    image: gameInfo.results[i].background_image,
+                    rating: gameInfo.results[i].rating,
+                    id: gameInfo.results[i].id,
+                });
+            }
+            //   console.log(games);
         });
-      }
-      //   console.log(games);
-    });
-  res.render("games");
+    res.render("games");
 });
 
 router.post("/filtered-games", (req, res) => {
-  let category = req.body.dropdown;
-  gamesFiltered = games.filter(function (x) {
-    return x.genre == category;
-  });
-  res.redirect("/filtered-games");
+    let category = req.body.dropdown;
+    gamesFiltered = games.filter(function(x) {
+        return x.genre == category;
+    });
+    res.redirect("/filtered-games");
 });
 
 router.post("/game-search", (req, res) => {
+
   let gameSearched = req.body.gameSearch;
   searchedGame = games.filter(function (x) {
     return x.name == gameSearched;
   });
 
-  res.redirect("/game-search");
+
+    res.redirect("/game-search");
 });
 
 router.post("/watchlist", (req, res) => {
@@ -293,18 +321,27 @@ router.post("/watchlist", (req, res) => {
     });
 
   res.redirect("/home");
+
+router.post("/addFriend", (req, res) => {
+    let friend = req.body.userId;
+    searchedGame = games.filter(function(x) {
+        return x.name == gameSearched;
+    });
+
+    res.redirect("/userSearch");
 });
 
 function authentication(req, res, next) {
-  if (req.session) {
-    if (req.session.authUser) {
-      next();
+    if (req.session) {
+        if (req.session.authUser) {
+            next();
+        } else {
+            res.redirect("/register");
+        }
     } else {
-      res.redirect("/register");
+        res.redirect("/home");
     }
-  } else {
-    res.redirect("/home");
-  }
 }
 
 module.exports = router;
+
