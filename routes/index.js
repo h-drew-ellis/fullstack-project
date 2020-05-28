@@ -8,11 +8,11 @@ const session = require("express-session");
 const app = express();
 
 app.use(
-  session({
-    secret: "racecar",
-    resave: false,
-    saveUninitialized: true,
-  })
+    session({
+        secret: "racecar",
+        resave: false,
+        saveUninitialized: true,
+    })
 );
 
 ////Arrays
@@ -30,159 +30,159 @@ let watchListGames = [];
 /*=============================================================================*/
 /*=============================================================================*/
 router.get("/", (req, res) => {
-  res.render("login");
+    res.render("login");
 });
 
 router.get("/register", (req, res) => {
-  res.render("register");
+    res.render("register");
 });
 
 router.get("/home", authentication, (req, res) => {
-  fetch("https://api.rawg.io/api/games?page_size=40")
-    .then((response) => response.json())
-    .then((gameInfo) => {
-      for (let i = 0; i < gameInfo.results.length; i++) {
-        games.push({
-          name: gameInfo.results[i].name,
-          released: gameInfo.results[i].released,
-          image: gameInfo.results[i].background_image,
-          rating: gameInfo.results[i].rating,
-          genre: gameInfo.results[i].genres[0].name,
-          id: gameInfo.results[i].id,
-        });
-      }
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=5")
+    fetch("https://api.rawg.io/api/games?page_size=40")
         .then((response) => response.json())
         .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=6")
-        .then((response) => response.json())
-        .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=15")
-        .then((response) => response.json())
-        .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      fetch("https://api.rawg.io/api/games?page=20")
-        .then((response) => response.json())
-        .then((gameInfo) => {
-          for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-              name: gameInfo.results[i].name,
-              released: gameInfo.results[i].released,
-              image: gameInfo.results[i].background_image,
-              rating: gameInfo.results[i].rating,
-              genre: gameInfo.results[i].genres[0].name,
-              id: gameInfo.results[i].id,
-            });
-          }
-        });
-    })
-    .then(() => {
-      gamesForHomePage = games.slice(1, 15);
+            for (let i = 0; i < gameInfo.results.length; i++) {
+                games.push({
+                    name: gameInfo.results[i].name,
+                    released: gameInfo.results[i].released,
+                    image: gameInfo.results[i].background_image,
+                    rating: gameInfo.results[i].rating,
+                    genre: gameInfo.results[i].genres[0].name,
+                    id: gameInfo.results[i].id,
+                });
+            }
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=5")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=6")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=15")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            fetch("https://api.rawg.io/api/games?page=20")
+                .then((response) => response.json())
+                .then((gameInfo) => {
+                    for (let i = 0; i < gameInfo.results.length; i++) {
+                        games.push({
+                            name: gameInfo.results[i].name,
+                            released: gameInfo.results[i].released,
+                            image: gameInfo.results[i].background_image,
+                            rating: gameInfo.results[i].rating,
+                            genre: gameInfo.results[i].genres[0].name,
+                            id: gameInfo.results[i].id,
+                        });
+                    }
+                });
+        })
+        .then(() => {
+            gamesForHomePage = games.slice(1, 15);
 
-      res.render("api", { games: gamesForHomePage });
-    });
+            res.render("api", { games: gamesForHomePage });
+        });
 });
 
 router.get("/games/:id", authentication, (req, res) => {
-  games = [];
-  let id = req.params.id;
-  console.log("initialize");
+    games = [];
+    let id = req.params.id;
+    console.log("initialize");
 
-  fetch(`https://api.rawg.io/api/games/${id}`)
-    .then((response) => response.json())
+    fetch(`https://api.rawg.io/api/games/${id}`)
+        .then((response) => response.json())
 
     .then((gameInfo) => {
-      console.log("game info");
-      games.push({
-        name: gameInfo.name,
-        released: gameInfo.released,
-        image: gameInfo.background_image,
-        rating: gameInfo.rating,
-        genre: gameInfo.genres[0].name,
-        id: gameInfo.id,
-      });
-      console.log("pushing game");
-      res.render("games", { game: games });
-      console.log("render");
+        console.log("game info");
+        games.push({
+            name: gameInfo.name,
+            released: gameInfo.released,
+            image: gameInfo.background_image,
+            rating: gameInfo.rating,
+            genre: gameInfo.genres[0].name,
+            id: gameInfo.id,
+        });
+        console.log("pushing game");
+        res.render("games", { game: games });
+        console.log("render");
     });
 });
 
 router.get("/filtered-games", authentication, (req, res) => {
-  res.render("filtered-games", { filteredGames: gamesFiltered });
+    res.render("filtered-games", { filteredGames: gamesFiltered });
 });
 
 router.get("/game-search", authentication, (req, res) => {
-  res.render("game-search", { gameSearched: searchedGame[0] });
+    res.render("game-search", { gameSearched: searchedGame[0] });
 });
 
 router.get("/users", (req, res) => {
-  db.watchlists
-    .findAll({
-      where: {
-        userId: req.session.userId,
-      },
-    })
-    .then((x) => {
-      for (let i = 0; i < x.length; i++) {
-        watchListGames.push({
-          id: x[i].dataValues.id,
-          genre: x[i].dataValues.genre,
-          userId: x[i].dataValues.userId,
-          name: x[i].dataValues.name,
-          released: x[i].dataValues.released,
-          image: x[i].dataValues.image,
-          rating: x[i].dataValues.rating,
+    db.watchlists
+        .findAll({
+            where: {
+                userId: req.session.userId,
+            },
+        })
+        .then((x) => {
+            for (let i = 0; i < x.length; i++) {
+                watchListGames.push({
+                    id: x[i].dataValues.id,
+                    genre: x[i].dataValues.genre,
+                    userId: x[i].dataValues.userId,
+                    name: x[i].dataValues.name,
+                    released: x[i].dataValues.released,
+                    image: x[i].dataValues.image,
+                    rating: x[i].dataValues.rating,
+                });
+            }
+            res.render("userPage", { watchListGames: watchListGames });
         });
-      }
-      res.render("userPage", { watchListGames: watchListGames });
-    });
 });
 
 router.get("/userSearch", authentication, (req, res) => {
-  db.User.findAll().then((users) => {
-    console.log(users);
-    res.render("user-search", { users: users });
-  });
+    db.User.findAll().then((users) => {
+        console.log(users);
+        res.render("user-search", { users: users });
+    });
 });
 
 /*=============================================================================*/
@@ -196,165 +196,169 @@ router.get("/userSearch", authentication, (req, res) => {
 ///LOGIN POST////
 /*=============================================================================*/
 router.post("/login", (req, res) => {
-  db.User.findOne({
-    where: {
-      username: req.body.loginUser,
-    },
-  }).then(function (user) {
-    if (!user) {
-      res.render("login", { message: "username not found, please try again." });
-    } else {
-      bcrypt.compare(req.body.loginPass, user.password, function (err, result) {
-        if (result == true) {
-          if (req.session) {
-            req.session.authUser = true;
-            //writing to session
-            req.session.userId = user.dataValues.id;
-          }
-          console.log("logging in");
-
-          res.redirect("/home");
+    db.User.findOne({
+        where: {
+            username: req.body.loginUser,
+        },
+    }).then(function(user) {
+        if (!user) {
+            res.render("login", { message: "username not found, please try again." });
         } else {
-          bcrypt.compare(req.body.loginPass, user.password, function (
-            err,
-            result
-          ) {
-            if (result == true) {
-              if (result) {
-                req.session.authUser = true;
-              }
-              console.log("logging in");
-              res.redirect("/home");
-            } else {
-              res.render("login", {
-                message: "Invalid Password please try again.",
-              });
-            }
-          });
+            bcrypt.compare(req.body.loginPass, user.password, function(err, result) {
+                if (result == true) {
+                    if (req.session) {
+                        req.session.authUser = true;
+                        //writing to session
+                        req.session.userId = user.dataValues.id;
+                    }
+                    console.log("logging in");
+
+                    res.redirect("/home");
+                } else {
+                    bcrypt.compare(req.body.loginPass, user.password, function(
+                        err,
+                        result
+                    ) {
+                        if (result == true) {
+                            if (result) {
+                                req.session.authUser = true;
+                            }
+                            console.log("logging in");
+                            res.redirect("/home");
+                        } else {
+                            res.render("login", {
+                                message: "Invalid Password please try again.",
+                            });
+                        }
+                    });
+                }
+            });
         }
-      });
-    }
-  });
+    });
 });
 
 /*=============================================================================*/
 ///REGISTER POST////
 /*=============================================================================*/
 router.post("/registerUser", (req, res) => {
-  bcrypt.hash(req.body.pass1, saltRounds, function (err, hash) {
-    db.User.create({
-      username: req.body.username,
-      password: hash,
-      first: req.body.firstName,
-      last: req.body.lastName,
-      email: req.body.email,
-    }).then(function (data) {
-      if (data) {
-        res.redirect("/");
-      }
+    bcrypt.hash(req.body.pass1, saltRounds, function(err, hash) {
+        db.User.create({
+            username: req.body.username,
+            password: hash,
+            first: req.body.firstName,
+            last: req.body.lastName,
+            email: req.body.email,
+        }).then(function(data) {
+            if (data) {
+                res.redirect("/");
+            }
+        });
     });
-  });
 });
 
 router.post("/games/specific-game", (req, res) => {
-  let id = req.body.gameId;
-  console.log(id);
-  fetch(`https://api.rawg.io/api/games/${id}`)
-    .then((response) => response.json())
-    .then((gameInfo) => {
-      for (let i = 0; i < gameInfo.results.length; i++) {
-        games.push({
-          name: gameInfo.results[i].name,
-          released: gameInfo.results[i].released,
-          image: gameInfo.results[i].background_image,
-          rating: gameInfo.results[i].rating,
-          id: gameInfo.results[i].id,
+    let id = req.body.gameId;
+    console.log(id);
+    fetch(`https://api.rawg.io/api/games/${id}`)
+        .then((response) => response.json())
+        .then((gameInfo) => {
+            for (let i = 0; i < gameInfo.results.length; i++) {
+                games.push({
+                    name: gameInfo.results[i].name,
+                    released: gameInfo.results[i].released,
+                    image: gameInfo.results[i].background_image,
+                    rating: gameInfo.results[i].rating,
+                    id: gameInfo.results[i].id,
+                });
+            }
+            //   console.log(games);
         });
-      }
-      //   console.log(games);
-    });
-  res.render("games");
+    res.render("games");
 });
 
 router.post("/filtered-games", (req, res) => {
-  let category = req.body.dropdown;
-  gamesFiltered = games.filter(function (x) {
-    return x.genre == category;
-  });
-  res.redirect("/filtered-games");
+    let category = req.body.dropdown;
+    gamesFiltered = games.filter(function(x) {
+        return x.genre == category;
+    });
+    res.redirect("/filtered-games");
 });
 
 router.post("/game-search", (req, res) => {
-  let gameSearched = req.body.gameSearch;
-  searchedGame = games.filter(function (x) {
-    return x.name == gameSearched;
-  });
+    let gameSearched = req.body.gameSearch;
+    searchedGame = games.filter(function(x) {
+        return x.name == gameSearched;
+    });
 
-  res.redirect("/game-search");
+    res.redirect("/game-search");
 });
 
 router.post("/watchlist", (req, res) => {
-  let name = req.body.namex;
-  let released = req.body.released;
-  let image = req.body.image;
-  let userId = req.session.userId;
-  let genre = req.body.genre;
+    let name = req.body.namex;
+    let released = req.body.released;
+    let image = req.body.image;
+    let userId = req.session.userId;
+    let genre = req.body.genre;
 
-  //   let rating = parseInt(req.body.rating);
-  let rating = 5;
+    //   let rating = parseInt(req.body.rating);
+    let rating = 5;
 
-  db.watchlists
-    .create({
-      genre: genre,
-      userId: userId,
-      name: name,
-      released: released,
-      image: image,
-      rating: rating,
-    })
-    .then((watchlist) => {
-      db.watchlists
-        .findAll({
-          where: {
-            userId: req.session.userId,
-          },
+    db.watchlists
+        .create({
+            genre: genre,
+            userId: userId,
+            name: name,
+            released: released,
+            image: image,
+            rating: rating,
         })
-        .then((x) => {
-          for (let i = 0; i < x.length; i++) {
-            watchListGames.push({
-              id: x[i].dataValues.id,
-              genre: x[i].dataValues.genre,
-              userId: x[i].dataValues.userId,
-              name: x[i].dataValues.name,
-              released: x[i].dataValues.released,
-              image: x[i].dataValues.image,
-              rating: x[i].dataValues.rating,
-            });
-          }
+        .then((watchlist) => {
+            db.watchlists
+                .findAll({
+                    where: {
+                        userId: req.session.userId,
+                    },
+                })
+                .then((x) => {
+                    for (let i = 0; i < x.length; i++) {
+                        watchListGames.push({
+                            id: x[i].dataValues.id,
+                            genre: x[i].dataValues.genre,
+                            userId: x[i].dataValues.userId,
+                            name: x[i].dataValues.name,
+                            released: x[i].dataValues.released,
+                            image: x[i].dataValues.image,
+                            rating: x[i].dataValues.rating,
+                        });
+                    }
+                });
         });
-    });
-  res.redirect("/home");
+    res.redirect("/home");
 });
 
 router.post("/addFriend", (req, res) => {
-  let friend = req.body.userId;
-  searchedGame = games.filter(function (x) {
-    return x.name == gameSearched;
-  });
+    let friend = req.body.userId;
+    let selfUser = req.session.userId;
 
-  res.redirect("/userSearch");
+    db.Friends
+        .create({
+            userId: selfUser,
+            friend: friend
+        })
+
+    res.redirect("/userSearch");
 });
 
 function authentication(req, res, next) {
-  if (req.session) {
-    if (req.session.authUser) {
-      next();
+    if (req.session) {
+        if (req.session.authUser) {
+            next();
+        } else {
+            res.redirect("/register");
+        }
     } else {
-      res.redirect("/register");
+        res.redirect("/home");
     }
-  } else {
-    res.redirect("/home");
-  }
 }
 
 module.exports = router;
