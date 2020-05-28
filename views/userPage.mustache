@@ -13,9 +13,9 @@
 <h2>Your Games</h2>
 {{#watchListGames}}
 <li>
-<a href='/games/{{id}}'><img width="200" height="300" src={{image}}></a> 
+<a href='/games/{{dataValues.id}}'><img width="200" height="300" src={{dataValues.image}}></a> 
 </br>
-<b>{{name}}</b>
+<b>{{dataValues.name}}</b>
 </li>
 
 {{/watchListGames}}
