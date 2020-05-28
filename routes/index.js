@@ -5,8 +5,16 @@ const bcrypt = require("bcrypt");
 const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session")
+const app = express()
+
+app.use(session({
+    secret: 'racecar',
+    resave: false,
+    saveUninitialized: true,
+}))
 
 
+////Arrays
 let saltRounds = 10
 let games = [];
 let gamesFiltered = [];
@@ -27,7 +35,7 @@ router.get("/register", (req, res) => {
     res.render("register");
 });
 
-router.get("/home", (req, res) => {
+router.get("/home", authentication, (req, res) => {
     fetch("https://api.rawg.io/api/games?page_size=40")
         .then((response) => response.json())
         .then((gameInfo) => {
@@ -162,6 +170,9 @@ router.post("/login", (req, res) => {
         } else {
             bcrypt.compare(req.body.loginPass, user.password, function(err, result) {
                 if (result == true) {
+                    if (req.session) {
+                        req.session.authUser = true
+                    }
                     console.log("logging in");
                     res.redirect("/home");
                 } else {
@@ -253,5 +264,17 @@ router.post("/game-search", (req, res) => {
 
     res.redirect("/game-search");
 });
+
+function authentication(req, res, next) {
+    if (req.session) {
+        if (req.session.authUser) {
+            next();
+        } else {
+            res.redirect("/register");
+        }
+    } else {
+        res.redirect("/home");
+    }
+}
 
 module.exports = router;

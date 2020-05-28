@@ -9,6 +9,7 @@ const fetch = require("node-fetch");
 const session = require("express-session")
 
 
+
 const saltRounds = 10;
 
 let games = [];
@@ -24,6 +25,7 @@ app.set("views", "./views");
 app.set("view engine", "mustache");
 
 app.use('/', routes)
+
 
 app.listen(3000, () => {
     console.log("All systems go");
