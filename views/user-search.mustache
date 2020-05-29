@@ -1,11 +1,13 @@
 <html>
 <head>
 
-<head>
+</head>
 
 
 <body> 
 <h1>Users</h1>
+<a href='/users'>Profile</a> </br>
+<a href='/home'>Home</a> </br>
 
 <ul>
 {{#users}}
@@ -13,6 +15,7 @@
 <li>  <b>{{dataValues.username}}</b> {{dataValues.email}}
 <form method="POST" action='/addFriend'>
 <input type="hidden" name="userId" value={{dataValues.id}}
+<input type="hidden" name="userName" value={{dataValues.username}}
 ><button>+</button></form></li>
 
 {{/users}}
@@ -21,4 +24,4 @@
 
 
 
-<html>
+</html>
