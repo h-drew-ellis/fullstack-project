@@ -1,16 +1,11 @@
 <html>
 <head>
-<<<<<<< HEAD
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link rel='stylesheet' href='/game-search.css'>
-=======
-
->>>>>>> 4b4db18dbc847b67b0197bb2e2869edb5a491c54
 </head>
 
 
 <body> 
-<<<<<<< HEAD
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Navigation</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,26 +34,6 @@
     <h5 class="card-title"><b id='name'>{{name}}</b></h5>
     <p class="card-text"><b>Release Date</b> {{released}} </br><b>Rating</b> {{rating}} </br> <b>Genre</b> {{genre}}</p>
     <form method='POST' action='/watchlist'> 
-=======
-<h1>Searched Game</h1>
-<a href='/users'>Profile</a> </br>
-<a href='/home'>Home</a> </br>
-<a href='/userSearch'>User Search</a> </br>
-
-<ul>
-{{#gameSearched}}
-
-
-<li> <img width="200" height="300" src={{image}}> 
-</br> Title: <b>{{name}}</b> 
-</br>Release Date: <b>{{released}}</b> 
-</br>Rating: <b>{{rating}}</b> 
-</br>Genre: <b>{{genre}}</b> 
-</br><button>+</button></li>
-
-
-<li> <img width="200" height="300" src={{image}}> </br> Title: <b>{{name}}</b> </br>Release Date: <b>{{released}}</b> </br>Rating: <b>{{rating}}</b> </br>Genre: <b>{{genre}}</b> </br><form method='POST' action='/watchlist'> 
->>>>>>> 4b4db18dbc847b67b0197bb2e2869edb5a491c54
 <input type='hidden' name='namex' value='{{name}}'>
 <input type='hidden' name='gameId' value='{{id}}'>
 <input type='hidden' name='genre' value='{{genre}}'>
@@ -74,16 +49,10 @@
 
 
 
-<<<<<<< HEAD
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-=======
-{{/gameSearched}}
-</ul>
-
->>>>>>> 4b4db18dbc847b67b0197bb2e2869edb5a491c54
 </body>
 
 
