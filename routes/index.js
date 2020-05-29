@@ -296,14 +296,6 @@ router.post("/watchlist", (req, res) => {
                     },
 
                 })
-                .then((watchlist) => {
-                    db.watchlists
-                        .findAll({
-                            where: {
-                                userId: req.session.userId,
-                            },
-                        })
-                });
             res.redirect("/home");
         });
 })
