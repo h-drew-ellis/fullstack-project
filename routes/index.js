@@ -6,7 +6,7 @@ const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session");
 const app = express();
-
+app.use(express.static("css"));
 app.use(
   session({
     secret: "racecar",
@@ -117,7 +117,7 @@ router.get("/home", authentication, (req, res) => {
         });
     })
     .then(() => {
-      gamesForHomePage = games.slice(1, 15);
+      gamesForHomePage = games.slice(1, 6);
 
       res.render("api", { games: gamesForHomePage });
     });
@@ -266,7 +266,7 @@ router.post("/games/specific-game", (req, res) => {
 });
 
 router.post("/filtered-games", (req, res) => {
-  let category = req.body.dropdown;
+  let category = req.body.category;
   gamesFiltered = games.filter(function (x) {
     return x.genre == category;
   });
@@ -288,6 +288,7 @@ router.post("/watchlist", (req, res) => {
   let image = req.body.image;
   let userId = req.session.userId;
   let genre = req.body.genre;
+  let gameId = req.body.gameId;
   console.log("printing name");
   console.log(name);
   //   let rating = parseInt(req.body.rating);
@@ -296,6 +297,7 @@ router.post("/watchlist", (req, res) => {
   db.watchlists
     .create({
       genre: genre,
+      gameId: gameId,
       userId: userId,
       name: name,
       released: released,

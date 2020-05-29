@@ -1,14 +1,23 @@
 <html>
-<head></head>
+<head>
+ <link rel='stylesheet' href='/login.css'>
+</head>
 <body>
-<div id="login box">
+<div class='loginBox'>
+<h1>Login</h1>
 <form method="POST" action="/login">
-    <input type="text" name="loginUser" placeholder="Username/Email">
-    <input type="password" name="loginPass" placeholder="Password" minlength="5" required>
-    <button id="loginButton">Login</button>
+  <div class='textBox'>  <input type="text" name="loginUser" placeholder="Username/Email"> </div>
+  <div class='textBox'>  <input type="password" name="loginPass" placeholder="Password" minlength="5" required> </div>
+    <button id="btn">Sign in</button>
 </form>
 </div>
 
-<div id=redirect>
-<a href="/register" id="registerRedirect">Create an account</a>
+<div class='others'>
+<div>Dont have an account?
+<a href="/register">Sign up</a>
 </div>
+</div>
+
+</body>
+
+</html>
