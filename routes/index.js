@@ -55,22 +55,6 @@ router.get("/home", authentication, (req, res) => {
             });
     })
     .then(() => {
-        gamesForHomePage = games.slice(1, 11);
-
-
-
-        for (let i = 0; i < gameInfo.results.length; i++) {
-            games.push({
-                name: gameInfo.results[i].name,
-                released: gameInfo.results[i].released,
-                image: gameInfo.results[i].background_image,
-                rating: gameInfo.results[i].rating,
-                genre: gameInfo.results[i].genres[0].name,
-                id: gameInfo.results[i].id,
-            });
-        }
-    })
-    .then(() => {
         fetch("https://api.rawg.io/api/games?page=15")
             .then((response) => response.json())
             .then((gameInfo) => {
@@ -103,7 +87,7 @@ router.get("/home", authentication, (req, res) => {
             });
     })
     .then(() => {
-        gamesForHomePage = games.slice(1, 6);
+        gamesForHomePage = games.slice(1, 11);
 
 
 
