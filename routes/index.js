@@ -156,15 +156,23 @@ router.get("/game-search", authentication, (req, res) => {
 });
 
 router.get("/users", (req, res) => {
-  db.watchlists
-    .findAll({
-      where: {
-        userId: req.session.userId,
-      },
-    })
-    .then((games) => {
-      res.render("userPage", { watchListGames: games });
-    });
+  let name = [];
+  db.User.findAll({
+    where: {
+      id: req.session.userId,
+    },
+  }).then((user) => {
+    db.watchlists
+      .findAll({
+        where: {
+          userId: req.session.userId,
+        },
+      })
+
+      .then((games) => {
+        res.render("userPage", { watchListGames: games, user: user });
+      });
+  });
 });
 
 router.get("/userSearch", authentication, (req, res) => {
