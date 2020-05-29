@@ -54,7 +54,7 @@ router.get("/home", authentication, (req, res) => {
         })
         .then((gameInfo) => {
             gamesForHomePage = games.slice(1, 11);
-            for (let i = 0; i < gameInfo.results.length; i++) {
+            for (let i = 0; i < gameInfo.length; i++) {
                 games.push({
                     name: gameInfo.results[i].name,
                     released: gameInfo.results[i].released,
