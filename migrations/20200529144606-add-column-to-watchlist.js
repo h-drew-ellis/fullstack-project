@@ -5,7 +5,7 @@ module.exports = {
         return queryInterface.addColumn(
             'watchlists',
             'gameId',
-            Sequelize.STRING
+            Sequelize.INTEGER
         );
     },
 
