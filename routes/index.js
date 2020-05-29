@@ -52,7 +52,7 @@ router.get("/home", authentication, (req, res) => {
                 });
             }
         })
-        .then(() => {
+        .then((gameInfo) => {
             gamesForHomePage = games.slice(1, 11);
             for (let i = 0; i < gameInfo.results.length; i++) {
                 games.push({
