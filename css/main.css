@@ -1,0 +1,23 @@
+.functions {
+  display: flex;
+
+  flex-direction: row;
+}
+
+#search {
+  float: right;
+}
+
+#filter {
+  float: left;
+}
+
+/* .games {
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
+} */
+
+.card {
+  margin: 5px;
+}

@@ -1,25 +1,37 @@
 <html>
-<head></head>
+<head>
+ <link rel='stylesheet' href='/register.css'>
+</head>
 <body>
-<div id="loginBox">
+
+
+<div class='loginBox'>
+<h1>Sign up</h1>
 <form method="POST" action="/registerUser">
-        <label>Username:</label> <input type="text" name="username" placeholder="Username" required>
+        <div class='textBox'> <input type="text" name="username" placeholder="Username" required> </div>
+        <div class='textBox'> <input type="password" name="pass1" placeholder="Password" minlength="5" required> </div> 
+        <div class='textBox'> <input type="password" name="pass2" placeholder="Confirm" minlength="5" required> </div>
+        <div class='textBox'> <input type="text" name="firstName" Placeholder="First Name"> </div>  
+        <div class='textBox'> <input type="text" name="lastName" placeholder="Last Name"> </div>
+        <div class='textBox'> <input type="email" name="email" placeholder="Email address" required> </div>
 
-        <label>Password: (minimum of 6 characters)</label><input type="password" name="pass1" placeholder="Password" minlength="5" required>
- 
-    <label>Confirm Password:</label><input type="password" name="pass2" placeholder="Please confirm password above" minlength="5" required>
-
-    <label>Optional:</label><input type="text" name="firstName" Placeholder="First Name">
-   
-    <label>Optional:</label><input type="text" name="lastName" placeholder="Last Name">
-
-    <label>Email Address</label><input type="email" name="email" placeholder="Email address" required>
-
-    <button id="registerBTN">Register</button>
+        <button id="btn">Register</button>
 </form>
 </div>
-<div id=redirect>
-<a href="/" id="loginRedirect">Already have an account? Click here to Login.</a>
-</div>
+
+
+
+
+
+
 </body>
+<footer>
+<div class='others'>
+<div>Already have an account?
+<a href='/'>Sign in</a>
+</div>
+</div>
+</footer>
 </html>
+
+

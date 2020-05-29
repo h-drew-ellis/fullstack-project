@@ -6,7 +6,7 @@ const { check } = require("express-validator");
 const fetch = require("node-fetch");
 const session = require("express-session");
 const app = express();
-
+app.use(express.static("css"));
 app.use(
     session({
         secret: "racecar",
@@ -41,83 +41,55 @@ router.get("/home", authentication, (req, res) => {
     fetch("https://api.rawg.io/api/games?page_size=40")
         .then((response) => response.json())
         .then((gameInfo) => {
-            for (let i = 0; i < gameInfo.results.length; i++) {
-                games.push({
-                    name: gameInfo.results[i].name,
-                    released: gameInfo.results[i].released,
-                    image: gameInfo.results[i].background_image,
-                    rating: gameInfo.results[i].rating,
-                    genre: gameInfo.results[i].genres[0].name,
-                    id: gameInfo.results[i].id,
-                });
-            }
-        })
-        .then(() => {
-            fetch("https://api.rawg.io/api/games?page=5")
-                .then((response) => response.json())
-                .then((gameInfo) => {
-                    for (let i = 0; i < gameInfo.results.length; i++) {
-                        games.push({
-                            name: gameInfo.results[i].name,
-                            released: gameInfo.results[i].released,
-                            image: gameInfo.results[i].background_image,
-                            rating: gameInfo.results[i].rating,
-                            genre: gameInfo.results[i].genres[0].name,
-                            id: gameInfo.results[i].id,
-                        });
-                    }
-                });
-        })
-        .then(() => {
-            fetch("https://api.rawg.io/api/games?page=6")
-                .then((response) => response.json())
-                .then((gameInfo) => {
-                    for (let i = 0; i < gameInfo.results.length; i++) {
-                        games.push({
-                            name: gameInfo.results[i].name,
-                            released: gameInfo.results[i].released,
-                            image: gameInfo.results[i].background_image,
-                            rating: gameInfo.results[i].rating,
-                            genre: gameInfo.results[i].genres[0].name,
-                            id: gameInfo.results[i].id,
-                        });
-                    }
-                });
-        })
-        .then(() => {
-            fetch("https://api.rawg.io/api/games?page=15")
-                .then((response) => response.json())
-                .then((gameInfo) => {
-                    for (let i = 0; i < gameInfo.results.length; i++) {
-                        games.push({
-                            name: gameInfo.results[i].name,
-                            released: gameInfo.results[i].released,
-                            image: gameInfo.results[i].background_image,
-                            rating: gameInfo.results[i].rating,
-                            genre: gameInfo.results[i].genres[0].name,
-                            id: gameInfo.results[i].id,
-                        });
-                    }
-                });
-        })
-        .then(() => {
-            fetch("https://api.rawg.io/api/games?page=20")
-                .then((response) => response.json())
-                .then((gameInfo) => {
-                    for (let i = 0; i < gameInfo.results.length; i++) {
-                        games.push({
-                            name: gameInfo.results[i].name,
-                            released: gameInfo.results[i].released,
-                            image: gameInfo.results[i].background_image,
-                            rating: gameInfo.results[i].rating,
-                            genre: gameInfo.results[i].genres[0].name,
-                            id: gameInfo.results[i].id,
-                        });
-                    }
-                });
-        })
-        .then(() => {
-            gamesForHomePage = games.slice(1, 15);
+
+          for (let i = 0; i < gameInfo.results.length; i++) {
+            games.push({
+              name: gameInfo.results[i].name,
+              released: gameInfo.results[i].released,
+              image: gameInfo.results[i].background_image,
+              rating: gameInfo.results[i].rating,
+              genre: gameInfo.results[i].genres[0].name,
+              id: gameInfo.results[i].id,
+            });
+          }
+        });
+    })
+    .then(() => {
+      fetch("https://api.rawg.io/api/games?page=15")
+        .then((response) => response.json())
+        .then((gameInfo) => {
+          for (let i = 0; i < gameInfo.results.length; i++) {
+            games.push({
+              name: gameInfo.results[i].name,
+              released: gameInfo.results[i].released,
+              image: gameInfo.results[i].background_image,
+              rating: gameInfo.results[i].rating,
+              genre: gameInfo.results[i].genres[0].name,
+              id: gameInfo.results[i].id,
+            });
+          }
+        });
+    })
+    .then(() => {
+      fetch("https://api.rawg.io/api/games?page=20")
+        .then((response) => response.json())
+        .then((gameInfo) => {
+          for (let i = 0; i < gameInfo.results.length; i++) {
+            games.push({
+              name: gameInfo.results[i].name,
+              released: gameInfo.results[i].released,
+              image: gameInfo.results[i].background_image,
+              rating: gameInfo.results[i].rating,
+              genre: gameInfo.results[i].genres[0].name,
+              id: gameInfo.results[i].id,
+            });
+          }
+        });
+    })
+    .then(() => {
+      gamesForHomePage = games.slice(1, 6);
+
+
 
             res.render("api", { games: gamesForHomePage });
         });
@@ -156,27 +128,20 @@ router.get("/game-search", authentication, (req, res) => {
 });
 
 router.get("/users", (req, res) => {
-    db.watchlists
-        .findAll({
-            where: {
-                userId: req.session.userId,
-            },
-        })
-        .then((games) => {
-            db.Friends.findAll()
-                .then((friends) => {
-                    db.User.findAll()
-                        .then((users) => {
-                            res.render("userPage", {
-                                watchListGames: games,
-                                users: users,
-                                friends: friends
-                            })
-                        })
-                })
 
-        });
-})
+  db.watchlists
+    .findAll({
+      where: {
+        userId: req.session.userId,
+      },
+    })
+    .then((games) => {
+      res.render("userPage", { watchListGames: games });
+    });
+});
+
+
+
 router.get("/userSearch", authentication, (req, res) => {
     db.User.findAll().then((users) => {
         console.log(users);
@@ -276,11 +241,13 @@ router.post("/games/specific-game", (req, res) => {
 });
 
 router.post("/filtered-games", (req, res) => {
-    let category = req.body.dropdown;
-    gamesFiltered = games.filter(function(x) {
-        return x.genre == category;
-    });
-    res.redirect("/filtered-games");
+
+  let category = req.body.category;
+  gamesFiltered = games.filter(function (x) {
+    return x.genre == category;
+  });
+  res.redirect("/filtered-games");
+
 });
 
 router.post("/game-search", (req, res) => {
@@ -293,23 +260,35 @@ router.post("/game-search", (req, res) => {
 });
 
 router.post("/watchlist", (req, res) => {
-    let name = req.body.namex;
-    let released = req.body.released;
-    let image = req.body.image;
-    let userId = req.session.userId;
-    let genre = req.body.genre;
 
-    //   let rating = parseInt(req.body.rating);
-    let rating = 5;
+  let name = req.body.namex;
+  let released = req.body.released;
+  let image = req.body.image;
+  let userId = req.session.userId;
+  let genre = req.body.genre;
+  let gameId = req.body.gameId;
+  console.log("printing name");
+  console.log(name);
+  //   let rating = parseInt(req.body.rating);
+  let rating = 5;
 
-    db.watchlists
-        .create({
-            genre: genre,
-            userId: userId,
-            name: name,
-            released: released,
-            image: image,
-            rating: rating,
+  db.watchlists
+    .create({
+      genre: genre,
+      gameId: gameId,
+      userId: userId,
+      name: name,
+      released: released,
+      image: image,
+      rating: rating,
+    })
+    .then((watchlist) => {
+      db.watchlists
+        .findAll({
+          where: {
+            userId: req.session.userId,
+          },
+
         })
         .then((watchlist) => {
             db.watchlists
@@ -336,6 +315,9 @@ router.post("/watchlist", (req, res) => {
 });
 
 router.post("/addFriend", (req, res) => {
+
+  let friend = req.body.userId;
+
     let friend = req.body.userId;
     let friendName = req.body.username;
     let selfUser = req.session.userId;
@@ -346,6 +328,7 @@ router.post("/addFriend", (req, res) => {
             friend: friend,
             username: friendName
         })
+
 
     res.redirect("/userSearch");
 });

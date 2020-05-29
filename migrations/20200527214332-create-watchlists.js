@@ -30,6 +30,9 @@ module.exports = {
       genre: {
         type: Sequelize.STRING,
       },
+      gameId: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
