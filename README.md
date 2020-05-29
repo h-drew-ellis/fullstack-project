@@ -4,8 +4,8 @@
 Website : https://still-atoll-68468.herokuapp.com
 
 ## accessible login :
-user: guest
-password : password
+-user: guest
+-password : password
 
 
 ## The Project 
