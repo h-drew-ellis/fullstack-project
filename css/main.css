@@ -1,3 +1,8 @@
+body {
+  font-family: sans-serif;
+  background-color: rgb(216, 216, 216);
+}
+
 .functions {
   display: flex;
 
@@ -5,19 +10,66 @@
 }
 
 #search {
+  margin-top: 10px;
   float: right;
+  position: absolute;
+  right: 5%;
 }
 
 #filter {
   float: left;
 }
 
-/* .games {
-  display: flex;
-  flex-direction: row;
-  margin-right: 10px;
-} */
-
 .card {
   margin: 5px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  background-color: rgb(216, 216, 216);
+  top: 10%;
+  border-style: solid 2px;
+  border-color: gray;
+  border-top-width: 0px;
+
+  width: 100%;
+  margin-bottom: 10%;
+}
+
+.buttons {
+  position: relative;
+  margin-top: 15px;
+  left: 50%;
+  font-weight: lighter;
+
+  margin-right: 75px;
+  width: 180px;
+  height: 180px;
+}
+
+.buttons:hover {
+  color: white;
+  background-color: #29b976;
+  transition: 0.3s;
+}
+
+.card-title {
+  color: white;
+  text-shadow: #000 0px 0px 2px;
+
+  font-size: xx-large;
+}
+
+#details {
+  font-size: large;
+  color: #71e6af;
+  text-shadow: #000 0px 0px 2px;
+}
+
+#details:hover {
+  cursor: pointer;
+  color: #00a055;
+  transition: 0.2s;
 }

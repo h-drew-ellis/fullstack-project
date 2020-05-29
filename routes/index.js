@@ -117,7 +117,7 @@ router.get("/home", authentication, (req, res) => {
         });
     })
     .then(() => {
-      gamesForHomePage = games.slice(1, 6);
+      gamesForHomePage = games.slice(1, 11);
 
       res.render("api", { games: gamesForHomePage });
     });
