@@ -1,13 +1,26 @@
 <html>
 <head>
 
-<head>
+</head>
 
 
 <body> 
 <h1>Searched Game</h1>
-{{#gameSearched}}
+<a href='/users'>Profile</a> </br>
+<a href='/home'>Home</a> </br>
+<a href='/userSearch'>User Search</a> </br>
+
 <ul>
+{{#gameSearched}}
+
+
+<li> <img width="200" height="300" src={{image}}> 
+</br> Title: <b>{{name}}</b> 
+</br>Release Date: <b>{{released}}</b> 
+</br>Rating: <b>{{rating}}</b> 
+</br>Genre: <b>{{genre}}</b> 
+</br><button>+</button></li>
+
 
 <li> <img width="200" height="300" src={{image}}> </br> Title: <b>{{name}}</b> </br>Release Date: <b>{{released}}</b> </br>Rating: <b>{{rating}}</b> </br>Genre: <b>{{genre}}</b> </br><form method='POST' action='/watchlist'> 
 <input type='hidden' name='namex' value='{{name}}'>
@@ -19,10 +32,12 @@
  <button>+</button></form></li>
 
 
-</ul>
+
 {{/gameSearched}}
+</ul>
+
 </body>
 
 
 
-<html>
+</html>

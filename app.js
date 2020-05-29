@@ -16,22 +16,22 @@ app.use(
   })
 );
 
-const saltRounds = 10;
-
-let games = [];
-let gamesFiltered = [];
-let searchedGame = [];
 
 //parser
 app.use(express.urlencoded());
+
+
+///routes
+app.use("/", routes);
 
 //engine
 app.engine("mustache", mustacheExpress());
 app.set("views", "./views");
 app.set("view engine", "mustache");
 
-///routes
-app.use("/", routes);
+
+
+
 
 app.listen(3000, () => {
   console.log("All systems go");

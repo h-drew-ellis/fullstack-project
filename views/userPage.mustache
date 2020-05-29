@@ -1,12 +1,14 @@
 <html>
 <head>
 
-<head>
+</head>
 
 
 <body> 
 <h1>User Profile</h1>
-
+<a href='/users'>Profile</a> </br>
+<a href='/home'>Home</a> </br>
+<a href='/userSearch'>User Search</a> </br>
 
 
 <ul>
@@ -21,10 +23,21 @@
 {{/watchListGames}}
 </ul>
 
+<h2>Your Friends</h2>
+{{#friends}}
+<li>
+{{username}}
+</li>
+
+{{/friends}}
+</ul>
+
+
+
 
 
 </body>
 
 
 
-<html>
+</html>
