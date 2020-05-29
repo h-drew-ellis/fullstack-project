@@ -7,13 +7,15 @@ const models = require("./models");
 const bcrypt = require("bcrypt");
 const fetch = require("node-fetch");
 const session = require("express-session");
+const PORT = process.env.PORT || 3000;
+
 app.use(express.static("css"));
 app.use(
-  session({
-    secret: "racecar",
-    resave: false,
-    saveUninitialized: true,
-  })
+    session({
+        secret: "racecar",
+        resave: false,
+        saveUninitialized: true,
+    })
 );
 
 
@@ -33,6 +35,6 @@ app.set("view engine", "mustache");
 
 
 
-app.listen(3000, () => {
-  console.log("All systems go");
+app.listen(PORT, () => {
+    console.log("All systems go");
 });
